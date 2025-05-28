@@ -130,7 +130,7 @@ std::string client_logger::format_log(std::string const &message,
                                       logger::severity severity,
                                       time_t current_date_time) const {
   std::string formatted_log = _log_format;
-  struct tm *timeinfo = localtime(&current_date_time);
+  struct tm *timeinfo = gmtime(&current_date_time);
   if (timeinfo == nullptr) {
     throw std::runtime_error("Failed to fetch time");
   }
