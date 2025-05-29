@@ -93,8 +93,14 @@ logger_builder *client_logger_builder::transform_with_configuration(
 
   auto streams_config_section = parsed_config.at("streams");
   for (auto const stream_config_section : streams_config_section) {
-    auto target_file_absolute_path =
-        convert_to_absolute(stream_config_section.at("path"));
+    std::string target_file_absolute_path;
+    auto path_from_config = stream_config_section.at("path");
+    if (path_from_config == "") {
+      target_file_absolute_path = std::move(path_from_config);
+    } else {
+
+      convert_to_absolute(path_from_config);
+    }
 
     auto stream_severities_config_section =
         stream_config_section.at("severities");
